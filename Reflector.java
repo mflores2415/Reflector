@@ -1,11 +1,23 @@
 import java.util.*;
 
 public class Reflector {
-    private final int nRec;
+    //need an int for # of records which we can set at 95
+    //also need an array type or linked list
+    //finally we need an instance since we will make this from singleton
+    private final int nRec = 95;
 
     private final LinkedList<Integer> storage;
 
     private static Reflector instance;
+
+    //lets create singleton implementation first
+    public static Reflector getInstance() {
+        if(instance == null)
+            instance = new Reflector();
+        return instance;
+    }
+
+    //from what I remember we will need to load in values, I'm just going to go with Prof implementation since it was simple
 
     private void load() {
         storage.add(45);
@@ -107,28 +119,22 @@ public class Reflector {
         storage.add(37);
         storage.add(20);
     }
-
+    //Reflector will be private and we just need to create the storage and load
     private Reflector(){
         storage = new LinkedList<>();
         load();
-        nRec = storage.size();
     }
-
-    public static Reflector getInstance() {
-        if(instance == null)
-            instance = new Reflector();
-        return instance;
-    }
-
+    //to reflect values we will just need to check if its from 0-94
+    //if it is we wll return the location in linkedlist
+    //if not return -1
     public int reflect(final int i) {
-        if ((i < 0) || (i >= nRec))
+        if(i >= 0 && i < 95)
+            return storage.get(i);
+        else
             return -1;
-        else {
-            final int ret = storage.get(i);
-            return ret;
-        }
     }
-
+    //Had some trouble with returns so i looked into lesson to get unconvert which he said would help
+    //the only thing i will change is return string to make it easier to look at
     public String unconvert(final int i) {
         for (int j = 0; j<nRec; j++)
             if(storage.get(j) == i)
